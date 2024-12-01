@@ -1,0 +1,104 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 80%;
+  z-index: 50;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+}
+
+.navbar-container {
+  max-width: 1280px;
+  /* max-w-7xl */
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar-container.sm-padding {
+  padding: 0 24px;
+}
+
+.navbar-container.lg-padding {
+  padding: 0 32px;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  /* h-16 */
+}
+
+.navbar-logo {
+  flex-shrink: 0;
+}
+
+.navbar-logo a {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  /* text-xl */
+  font-weight: 600;
+  /* font-semibold */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-logo a:hover {
+  color: white;
+}
+
+.navbar-links {
+  display: none;
+}
+
+.navbar-links.md-show {
+  display: flex;
+
+}
+
+.navbar-links .link {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 8px 12px;
+  /* px-3 py-2 */
+  font-size: 0.875rem;
+  /* text-sm */
+  font-weight: 500;
+  /* font-medium */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-links .link:hover {
+  color: white;
+}
+
+.navbar-links .github {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  /* px-3 py-2 */
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-links .github:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.navbar-links .github .icon {
+  height: 20px;
+  /* h-5 */
+  width: 20px;
+  /* w-5 */
+}
+
+h3 {
+  color: white;
+}
