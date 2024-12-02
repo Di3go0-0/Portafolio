@@ -47,32 +47,27 @@
 }
 
 .navbar-logo a:hover {
-  color: white;
+  color: #a5a5a5;
 }
 
-.navbar-links {
-  display: none;
-}
-
-.navbar-links.md-show {
+.links-container {
   display: flex;
-
+  width: 25vw;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.navbar-links .link {
-  color: rgba(255, 255, 255, 0.75);
-  padding: 8px 12px;
-  /* px-3 py-2 */
-  font-size: 0.875rem;
-  /* text-sm */
+.links-container .link {
+  color: white;
+  font-size: 1.2rem;
   font-weight: 500;
-  /* font-medium */
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.navbar-links .link:hover {
-  color: white;
+
+.links-container .link:hover {
+  color: #a5a5a5;
 }
 
 .navbar-links .github {
@@ -85,20 +80,17 @@
   background-color: rgba(0, 0, 0, 0.2);
   color: rgba(255, 255, 255, 0.9);
   transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
 }
 
 .navbar-links .github:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 .navbar-links .github .icon {
-  height: 20px;
+  height: 25px;
   /* h-5 */
-  width: 20px;
+  width: 25px;
   /* w-5 */
-}
-
-h3 {
-  color: white;
 }

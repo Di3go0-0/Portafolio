@@ -10,9 +10,29 @@ export const Navbar = () => {
           <div className="navbar-logo">
             <Link to="/">Di3go0-0</Link>
           </div>
-          {/* <div className="navbar-links md-show"> */}
-          {/*   <h3>Welcome To My Portafolio</h3> */}
-          {/* </div> */}
+
+          <div className="links-container">
+            <a
+              href="#home"
+              className="link"
+            >
+              Home
+            </a>
+            <a
+              href="#about"
+              className="link"
+            >
+              About
+            </a>
+            <a
+              href="#projects"
+              className="link"
+            >
+              Projects
+            </a>
+          </div>
+
+
           <div className="navbar-links md-show">
             <a
               href="https://github.com/Di3go0-0"
