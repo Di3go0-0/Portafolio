@@ -1,6 +1,7 @@
 import './Home.css'
 import SkillsCarousel from '../Skills/Skills';
 import { About } from '../About/About';
+import { Footer } from '../Footer/Footer';
 
 export const Home = () => {
   return (
@@ -20,6 +21,11 @@ export const Home = () => {
 
       <section id="projects">
         <SkillsCarousel />
+      </section>
+
+
+      <section id="footer">
+        <Footer />
       </section>
     </div >
   );

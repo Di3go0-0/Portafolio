@@ -1,0 +1,95 @@
+.footer {
+  background-color: #0D071E;
+  padding: 2rem;
+  color: white;
+  width: 100vw;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.avatar-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.social-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.social-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease;
+}
+
+/* Hover sobre el icono */
+.social-icon-wrapper:hover {
+  color: #fff;
+}
+
+/* Estilo para los iconos */
+.social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Icono de LinkedIn */
+.icon-label {
+  display: none;
+  /* Iniciar oculto */
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0077b5;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Cuando el icono está en hover, mostrar el texto */
+.social-icon-wrapper:hover .icon-label {
+  display: block;
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .social-section {
+    align-items: center;
+  }
+}
