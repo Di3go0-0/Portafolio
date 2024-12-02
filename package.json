@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-root",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cd Client && bun run dev",
+    "build": "cd Client && bun run build",
+    "lint": "cd Client && bun run lint",
+    "preview": "cd Client && bun run preview",
+    "predeploy": "cd Client && bun run predeploy",
+    "deploy": "cd Client && bun run deploy"
+  }
+}
