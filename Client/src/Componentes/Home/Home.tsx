@@ -1,6 +1,6 @@
-import { act } from 'react';
 import { Button } from '../Button/Button';
 import './Home.css'
+import SkillsCarousel from '../Skills/Skills';
 
 
 
@@ -24,7 +24,7 @@ export const Home = () => {
   return (
 
     <div className='Home'>
-      <section className="image-section">
+      <section className="image-section" id='home'>
 
         <div className="Text-container">
 
@@ -32,7 +32,7 @@ export const Home = () => {
         </div>
       </section>
 
-      <section className='About-container'>
+      <section className='About-container' id='about'>
         <div className='About'>
           <div className="text-container">
             <h1>Diego Rincón</h1>
@@ -62,8 +62,9 @@ export const Home = () => {
         </div>
       </section >
 
-
-
+      <section className="Projects-container" id="projects">
+        <SkillsCarousel />
+      </section>
     </div >
   );
 }
