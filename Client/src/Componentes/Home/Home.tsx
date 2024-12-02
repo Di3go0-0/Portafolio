@@ -18,7 +18,7 @@ export const Home = () => {
         <About />
       </section>
 
-      <section className="Projects-container" id="projects">
+      <section id="projects">
         <SkillsCarousel />
       </section>
     </div >
