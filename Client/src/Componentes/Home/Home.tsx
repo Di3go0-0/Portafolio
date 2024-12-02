@@ -10,13 +10,16 @@ export const Home = () => {
 
   const downloadCV = () => {
     const link = document.createElement('a');
-    link.href = '../../../Resources/IMG/Main.jpg';
-    link.download = 'CV_Diego_Rincon.jpg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    import('../../Resources/PDF/cv.pdf').then((module) => {
+      link.href = module.default;
+      link.download = 'CV_Diego_Rincon.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch((error) => {
+      console.error('Error loading CV:', error);
+    });
   }
-
 
   return (
 
