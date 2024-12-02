@@ -11,8 +11,8 @@
 * {
   font-family: Poppins, sans-serif;
   box-sizing: border-box;
-  scrollbar-color: #014040 #000D0C;
+  scrollbar-color: #0c0140 #000000;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-
+  overflow-x: hidden;
 }
