@@ -19,7 +19,7 @@
   background-position: center center;
   justify-content: center;
 
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../../Resources/IMG/Main.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../Resources/IMG/Main.jpg);
   background-size: cover;
 
   h1 {
@@ -92,17 +92,46 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  height: 300px;
+  width: 300px;
+
+  background-position: center center;
+
+  background-image: url(../../Resources/IMG/download.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease;
 }
 
-.img-container img {
-  width: 100%;
-  transition: transform 0.5s ease, mask-image 0.5s ease;
-  mask-image: linear-gradient(black 80%, transparent);
+.About .img-container:hover {
+  background-size: 120%;
+  transition: background-size 1s ease;
 }
 
-.img-container img:hover {
-  transform: scale(1.2);
-}
+/* .About .img-container { */
+/*   border-radius: 10%; */
+/*   overflow: hidden; */
+/*   border: solid transparent; */
+/*   box-shadow: 5px 7px 25px rgba(0, 0, 0, 0.15); */
+/*   display: flex; */
+/*   justify-content: center; */
+/*   align-items: center; */
+/**/
+/*   background: ; */
+/* } */
+/**/
+/* .img-container img { */
+/*   width: 100%; */
+/*   transition: transform 0.5s ease, mask-image 0.5s ease; */
+/*   mask-image: linear-gradient(black 80%, transparent); */
+/* } */
+/**/
+/* .img-container img:hover { */
+/*   transform: scale(1.2); */
+/* } */
+/**/
+
 
 .buttons {
   margin: 40px 0;

@@ -2,9 +2,6 @@ import { Button } from '../Button/Button';
 import './Home.css'
 import SkillsCarousel from '../Skills/Skills';
 
-
-
-
 export const Home = () => {
 
   const openPage = (url: string) => {
@@ -55,10 +52,14 @@ export const Home = () => {
           </div>
 
 
-          <div className="img-container">
-            <img src="../../../Resources/IMG/download.gif" alt="Gif" />
-          </div>
+          {/* <div className="img-container"> */}
+          {/*   <img src="../../Resources/IMG/Main.jpg" alt="Gif" /> */}
+          {/* </div> */}
+          {/**/}
 
+          <div className='img-container'>
+
+          </div>
         </div>
       </section >
 
