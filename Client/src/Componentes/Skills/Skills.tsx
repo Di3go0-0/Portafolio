@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import "./Skills.css";
 
 const SkillsCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const skillsListRef = useRef<HTMLDivElement>(null);
 
   const skills = [
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
@@ -23,38 +24,40 @@ const SkillsCarousel = () => {
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
   ];
 
-  // Duplicamos las imágenes
+  // Duplicamos las imágenes para crear un efecto continuo
   const duplicatedSkills = [...skills, ...skills];
 
   useEffect(() => {
     if (!isPaused) {
       const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) =>
-          prevIndex + 1 >= skills.length ? 0 : prevIndex + 1
-        );
-      }, 3000); // Cambia cada 3 segundos
+        if (skillsListRef.current) {
+          const { scrollLeft, scrollWidth, clientWidth } = skillsListRef.current;
 
-      return () => clearInterval(interval); // Limpieza del intervalo
+          // Si llega al final, reinicia el scroll
+          if (scrollLeft + clientWidth >= scrollWidth) {
+            skillsListRef.current.scrollLeft = 0;
+          } else {
+            // Avanza el scroll
+            skillsListRef.current.scrollLeft += 1;
+          }
+        }
+      }, 5); // Velocidad del scroll
+
+      return () => clearInterval(interval);
     }
-  }, [isPaused, skills.length]);
+  }, [isPaused]);
 
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
-
-  // Tamaño de cada imagen con margen (ancho de imagen + margen)
-  const imageWidth = 120;
-  const translateX = -(currentIndex * imageWidth) % (skills.length * imageWidth);
 
   return (
     <section className="skills-section">
       <div className="skills-container">
         <div
           className="skills-list"
-          style={{
-            transform: `translateX(${translateX}px)`,
-            transition: isPaused ? "none" : "transform 0.5s linear",
-            width: `${duplicatedSkills.length * imageWidth}px`,
-          }}
+          ref={skillsListRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           {duplicatedSkills.map((skill, index) => (
             <img

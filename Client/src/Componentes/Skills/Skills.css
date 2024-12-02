@@ -20,12 +20,24 @@
 
 .skills-list {
   display: flex;
+  overflow: scroll;
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
   align-items: center;
   height: 100%;
   width: max-content;
   padding: 10px;
-  transition: transform 0.5s linear;
+  /* transition: transform 0.5s linear; */
 }
+
+.skills-list::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+
 
 .skills-list img {
   width: 100px;
