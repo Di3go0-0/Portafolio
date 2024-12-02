@@ -8,7 +8,7 @@ export const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-content">
           <div className="navbar-logo">
-            <Link to="/">Di3go0-0</Link>
+            <Link to="/Portafolio">Di3go0-0</Link>
           </div>
 
           <div className="links-container">
