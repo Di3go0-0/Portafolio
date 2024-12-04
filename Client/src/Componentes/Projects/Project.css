@@ -42,7 +42,7 @@
   flex-direction: column;
   align-items: center;
 
-  height: 350px;
+  height: 380px;
   padding: 1.5rem;
 
   .description {
@@ -70,6 +70,9 @@
 
 .technologies {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
@@ -91,6 +94,7 @@
 
 .github-link {
   display: inline-block;
+  height: 53px;
   /* background: black; */
   background: #5a2ca6;
   color: white;
