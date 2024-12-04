@@ -24,7 +24,7 @@ const SkillsCarousel = () => {
   ];
 
   // Duplicamos las imágenes para crear un efecto continuo
-  const duplicatedSkills = [...skills, ...skills];
+  const duplicatedSkills = [...skills, ...skills, ...skills];
 
   useEffect(() => {
     if (!isPaused) {
