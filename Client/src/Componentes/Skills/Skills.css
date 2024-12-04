@@ -59,8 +59,7 @@
 
   width: 100vw;
 
-  background: #0D071E;
-  /* background: linear-gradient(#01080E, #0D071E); */
+  background: linear-gradient(#0D071E, #01080E);
   padding: 0;
   margin: 0;
 }
