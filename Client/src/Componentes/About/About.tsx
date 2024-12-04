@@ -1,5 +1,6 @@
 import { Button } from "../Button/Button"
 import './About.css'
+import avatar from '../../Resources/IMG/download.gif'
 
 
 export const About = () => {
@@ -46,14 +47,11 @@ export const About = () => {
             </div>
           </div>
 
-
-          {/* <div className="img-container"> */}
-          {/*   <img src="../../Resources/IMG/Main.jpg" alt="Gif" /> */}
-          {/* </div> */}
-          {/**/}
-
-          <div className='img-container'>
-
+          <div className="img-container">
+            <img
+              src={avatar}
+              alt="Gif"
+            />
           </div>
         </div>
       </section >
