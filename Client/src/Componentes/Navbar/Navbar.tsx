@@ -19,19 +19,18 @@ export const Navbar = () => {
               Home
             </a>
             <a
-              href="#about"
-              className="link"
-            >
-              About
-            </a>
-            <a
               href="#projects"
               className="link"
             >
               Projects
             </a>
+            <a
+              href="#about"
+              className="link"
+            >
+              About
+            </a>
           </div>
-
 
           <div className="navbar-links md-show">
             <a
