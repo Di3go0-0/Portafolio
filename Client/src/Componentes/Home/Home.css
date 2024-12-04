@@ -43,3 +43,18 @@
   justify-content: center;
 
 }
+
+.projects {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+
+  background: linear-gradient(#01080E, #0D071E);
+}
