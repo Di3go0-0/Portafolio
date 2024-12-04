@@ -1,5 +1,6 @@
 .About-container {
-  background: linear-gradient(#01080E, #0D071E);
+  /* background: linear-gradient(#01080E, #0D071E); */
+  background: #0D071E;
   padding: 0;
   margin: 0;
 }
