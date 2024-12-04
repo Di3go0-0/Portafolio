@@ -72,7 +72,7 @@ const projects: IProjectProps[] = [
     },
     ],
 
-    githubUrl: "https://github.com/Di3go0-0/ProjectManagement"
+    githubUrl: "https://github.com/Di3go0-0/LearnNET"
 
   }, {
     image: TaskImg,
