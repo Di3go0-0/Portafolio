@@ -53,6 +53,7 @@ export const About = () => {
               alt="Gif"
             />
           </div>
+
         </div>
       </section >
 
