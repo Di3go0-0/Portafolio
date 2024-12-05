@@ -18,9 +18,10 @@
   align-items: center;
   background-position: center center;
   justify-content: center;
-
+  /* background: linear-gradient(#0D071E, #01080E); */
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../Resources/IMG/Main.jpg);
   background-size: cover;
+  background-color: #0D071E;
 
   h1 {
     color: white;
