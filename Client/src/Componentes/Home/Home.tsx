@@ -105,7 +105,7 @@ export const Home = () => {
       <section className="image-section" id='home'>
 
         <div className="Text-container">
-          <h1 className="efect2"><span className="color-h1">WELCOME</span> TO MY PORTAFOLIO</h1>
+          <h1 className="efect2"><span className="color-h1">WELCOME</span> TO MY PORTFOLIO</h1>
           <img src="https://readme-typing-svg.herokuapp.com?font=Time+New+Roman&color=cyan&size=25&center=true&vCenter=true&width=600&height=100&lines=Self-taught+Full+Stack+Junior+Developer,;System+and+Computing+Engineering+Student" />
         </div>
       </section>
