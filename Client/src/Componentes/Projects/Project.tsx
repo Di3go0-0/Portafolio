@@ -1,7 +1,16 @@
 import './Project.css'
 import { IProjectProps } from '../../Interfaces'
+import { JsonBlock } from '../Json/Json'
 
 export const ProjectCard = ({ title, description, architecture, technologies, highlights, githubUrl, index = 0 }: IProjectProps) => {
+  const data = {
+    name: title,
+    description,
+    architecture,
+    stack: technologies,
+    highlights,
+  }
+
   return (
     <div className="api-project">
       <div className="response-block">
@@ -11,15 +20,7 @@ export const ProjectCard = ({ title, description, architecture, technologies, hi
             GitHub ↗
           </a>
         </div>
-        <pre className="json-response">
-{`{
-  "name": "${title}",
-  "description": "${description}",
-  "architecture": "${architecture}",
-  "stack": ${JSON.stringify(technologies)},
-  "highlights": ${JSON.stringify(highlights, null, 4).replace(/\n/g, '\n  ')}
-}`}
-        </pre>
+        <JsonBlock data={data} />
       </div>
     </div>
   )

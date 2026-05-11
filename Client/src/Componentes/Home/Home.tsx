@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import './Home.css'
 import { Skills } from '../Skills/Skills'
 import { Footer } from '../Footer/Footer'
 import { IProjectProps } from '../../Interfaces'
 import { ProjectCard } from '../Projects/Project'
+import { JsonBlock } from '../Json/Json'
 
 const projects: IProjectProps[] = [
   {
@@ -55,19 +57,6 @@ const projects: IProjectProps[] = [
   },
 ]
 
-const aboutData = {
-  name: 'Diego Rincón',
-  role: 'Backend Developer',
-  stack: ['Rust', 'TypeScript', 'NestJS', 'FastAPI', 'PostgreSQL', 'AWS'],
-  os: 'Arch Linux',
-  editor: 'Neovim',
-  status: 'Systems & Computing Engineering Student',
-  links: {
-    github: 'https://github.com/Di3go0-0',
-    linkedin: 'https://linkedin.com/in/di3go00',
-  },
-}
-
 const downloadCV = () => {
   const link = document.createElement('a')
   import('../../Resources/PDF/cv.pdf').then((module) => {
@@ -79,12 +68,63 @@ const downloadCV = () => {
   })
 }
 
+interface EndpointProps {
+  method: string
+  path: string
+  description: string
+  id: string
+  curl?: string
+  children: React.ReactNode
+}
+
+const Endpoint = ({ method, path, description, id, curl, children }: EndpointProps) => {
+  const [open, setOpen] = useState(true)
+
+  return (
+    <section className="endpoint-section" id={id}>
+      <button className="endpoint-toggle" onClick={() => setOpen(!open)}>
+        <div className="endpoint-header">
+          <span className={`method method-${method.toLowerCase()}`}>{method}</span>
+          <span className="endpoint-path">{path}</span>
+          <span className="endpoint-desc">{description}</span>
+        </div>
+        <span className={`chevron ${open ? 'open' : ''}`}>&#9662;</span>
+      </button>
+      {open && (
+        <div className="endpoint-body">
+          {curl && (
+            <div className="curl-block">
+              <div className="curl-header">Request</div>
+              <pre className="curl-code">{curl}</pre>
+            </div>
+          )}
+          <div className="response-wrapper">
+            {children}
+          </div>
+        </div>
+      )}
+    </section>
+  )
+}
+
 const sections = [
   { id: 'about', method: 'GET', path: '/about' },
   { id: 'projects', method: 'GET', path: '/projects' },
+  { id: 'projects-oss', method: 'GET', path: '/projects?type=oss' },
   { id: 'skills', method: 'GET', path: '/skills' },
   { id: 'contact', method: 'POST', path: '/contact' },
 ]
+
+const aboutResponse = {
+  name: 'Diego Rincón',
+  role: 'Backend Developer',
+  stack: ['Rust', 'TypeScript', 'NestJS', 'FastAPI', 'PostgreSQL', 'AWS'],
+  environment: { os: 'Arch Linux', editor: 'Neovim', shell: 'Bash' },
+  status: 'Systems & Computing Engineering Student',
+}
+
+const ossProjects = projects.filter(p => p.highlights.includes('Open source'))
+const apiProjects = projects.filter(p => !p.highlights.includes('Open source'))
 
 export const Home = () => {
   return (
@@ -93,7 +133,9 @@ export const Home = () => {
         <div className="sidebar-header">
           <span className="api-version">v1.0.0</span>
           <h2>Diego API</h2>
+          <p className="sidebar-sub">Backend Developer Portfolio</p>
         </div>
+        <div className="sidebar-section-label">Endpoints</div>
         <nav className="sidebar-nav">
           {sections.map((s) => (
             <a key={s.id} href={`#${s.id}`} className="sidebar-link">
@@ -102,79 +144,119 @@ export const Home = () => {
             </a>
           ))}
         </nav>
+        <div className="sidebar-section-label">Links</div>
+        <nav className="sidebar-nav">
+          <a href="https://github.com/Di3go0-0" target="_blank" rel="noopener noreferrer" className="sidebar-link">
+            <span className="sidebar-icon">↗</span>
+            <span className="path">GitHub</span>
+          </a>
+          <a href="https://linkedin.com/in/di3go00" target="_blank" rel="noopener noreferrer" className="sidebar-link">
+            <span className="sidebar-icon">↗</span>
+            <span className="path">LinkedIn</span>
+          </a>
+        </nav>
       </aside>
 
       <main className="api-content">
-        <section className="endpoint-section" id="about">
-          <div className="endpoint-header">
-            <span className="method method-get">GET</span>
-            <span className="endpoint-path">/about</span>
-            <span className="endpoint-desc">Returns developer information</span>
+        <div className="api-topbar">
+          <div className="server-select">
+            <span className="server-label">Server</span>
+            <span className="server-url">https://diego.dev</span>
           </div>
+          <div className="auth-badge">
+            <span className="auth-lock">&#128274;</span>
+            Authorized
+          </div>
+        </div>
+
+        <Endpoint
+          method="GET"
+          path="/about"
+          description="Returns developer information"
+          id="about"
+          curl="curl -X GET https://diego.dev/about \
+  -H 'Accept: application/json'"
+        >
           <div className="response-block">
             <div className="response-header">
               <span className="status-code">200</span> OK
             </div>
-            <pre className="json-response">
-{`{
-  "name": "${aboutData.name}",
-  "role": "${aboutData.role}",
-  "stack": ${JSON.stringify(aboutData.stack, null, 4).replace(/\n/g, '\n  ')},
-  "environment": {
-    "os": "${aboutData.os}",
-    "editor": "${aboutData.editor}"
-  },
-  "status": "${aboutData.status}"
-}`}
-            </pre>
+            <JsonBlock data={aboutResponse} />
           </div>
-        </section>
+        </Endpoint>
 
-        <section className="endpoint-section" id="projects">
-          <div className="endpoint-header">
-            <span className="method method-get">GET</span>
-            <span className="endpoint-path">/projects</span>
-            <span className="endpoint-desc">Returns all projects</span>
-          </div>
+        <Endpoint
+          method="GET"
+          path="/projects"
+          description="Returns backend & full-stack projects"
+          id="projects"
+          curl={`curl -X GET https://diego.dev/projects \\
+  -H 'Accept: application/json'`}
+        >
           <div className="response-block">
             <div className="response-header">
-              <span className="status-code">200</span> OK &middot; {projects.length} results
+              <span className="status-code">200</span> OK &middot; {apiProjects.length} results
             </div>
           </div>
           <div className="projects-list">
-            {projects.map((project, index) => (
+            {apiProjects.map((project, index) => (
               <ProjectCard key={index} {...project} index={index} />
             ))}
           </div>
-        </section>
+        </Endpoint>
 
-        <section className="endpoint-section" id="skills">
-          <div className="endpoint-header">
-            <span className="method method-get">GET</span>
-            <span className="endpoint-path">/skills?group=true</span>
-            <span className="endpoint-desc">Returns skills grouped by category</span>
+        <Endpoint
+          method="GET"
+          path="/projects?type=oss"
+          description="Returns open source projects"
+          id="projects-oss"
+          curl={`curl -X GET 'https://diego.dev/projects?type=oss' \\
+  -H 'Accept: application/json'`}
+        >
+          <div className="response-block">
+            <div className="response-header">
+              <span className="status-code">200</span> OK &middot; {ossProjects.length} results
+            </div>
           </div>
+          <div className="projects-list">
+            {ossProjects.map((project, index) => (
+              <ProjectCard key={index} {...project} index={index} />
+            ))}
+          </div>
+        </Endpoint>
+
+        <Endpoint
+          method="GET"
+          path="/skills?group=true"
+          description="Returns skills grouped by category"
+          id="skills"
+          curl={`curl -X GET 'https://diego.dev/skills?group=true' \\
+  -H 'Accept: application/json'`}
+        >
           <Skills />
-        </section>
+        </Endpoint>
 
-        <section className="endpoint-section" id="contact">
-          <div className="endpoint-header">
-            <span className="method method-post">POST</span>
-            <span className="endpoint-path">/contact</span>
-            <span className="endpoint-desc">Get in touch</span>
-          </div>
+        <Endpoint
+          method="POST"
+          path="/contact"
+          description="Get in touch"
+          id="contact"
+          curl={`curl -X POST https://diego.dev/contact \\
+  -H 'Content-Type: application/json' \\
+  -d '{"via": "linkedin"}'`}
+        >
           <div className="contact-links">
-            <a href={aboutData.links.linkedin} target="_blank" rel="noopener noreferrer" className="contact-btn">
+            <a href="https://linkedin.com/in/di3go00" target="_blank" rel="noopener noreferrer" className="contact-btn">
               LinkedIn
             </a>
-            <a href={aboutData.links.github} target="_blank" rel="noopener noreferrer" className="contact-btn">
+            <a href="https://github.com/Di3go0-0" target="_blank" rel="noopener noreferrer" className="contact-btn">
               GitHub
             </a>
             <button onClick={downloadCV} className="contact-btn">
               Download CV
             </button>
           </div>
-        </section>
+        </Endpoint>
 
         <Footer />
       </main>

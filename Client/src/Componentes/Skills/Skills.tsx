@@ -1,4 +1,5 @@
 import './Skills.css'
+import { JsonBlock } from '../Json/Json'
 
 const skillsData = {
   languages: ['Rust', 'TypeScript', 'Python', 'C#'],
@@ -13,11 +14,9 @@ export const Skills = () => {
   return (
     <div className="response-block">
       <div className="response-header">
-        <span className="status-code">200</span> OK
+        <span className="status-code">200</span> OK &middot; 6 categories
       </div>
-      <pre className="json-response">
-{JSON.stringify(skillsData, null, 2)}
-      </pre>
+      <JsonBlock data={skillsData} />
     </div>
   )
 }
