@@ -1,8 +1,6 @@
 import './Home.css'
-import { Terminal } from '../Terminal/Terminal'
 import { Skills } from '../Skills/Skills'
 import { Footer } from '../Footer/Footer'
-import { Button } from '../Button/Button'
 import { IProjectProps } from '../../Interfaces'
 import { ProjectCard } from '../Projects/Project'
 
@@ -57,8 +55,17 @@ const projects: IProjectProps[] = [
   },
 ]
 
-const openPage = (url: string) => {
-  window.open(url, '_blank')
+const aboutData = {
+  name: 'Diego Rincón',
+  role: 'Backend Developer',
+  stack: ['Rust', 'TypeScript', 'NestJS', 'FastAPI', 'PostgreSQL', 'AWS'],
+  os: 'Arch Linux',
+  editor: 'Neovim',
+  status: 'Systems & Computing Engineering Student',
+  links: {
+    github: 'https://github.com/Di3go0-0',
+    linkedin: 'https://linkedin.com/in/di3go00',
+  },
 }
 
 const downloadCV = () => {
@@ -72,38 +79,105 @@ const downloadCV = () => {
   })
 }
 
+const sections = [
+  { id: 'about', method: 'GET', path: '/about' },
+  { id: 'projects', method: 'GET', path: '/projects' },
+  { id: 'skills', method: 'GET', path: '/skills' },
+  { id: 'contact', method: 'POST', path: '/contact' },
+]
+
 export const Home = () => {
   return (
-    <div className="Home">
-      <section className="hero-section" id="home">
-        <Terminal />
-        <div className="hero-actions">
-          <Button parentMethod={() => openPage('https://www.linkedin.com/in/di3go00/')}>
-            LinkedIn
-          </Button>
-          <Button parentMethod={() => openPage('https://github.com/Di3go0-0')}>
-            GitHub
-          </Button>
-          <Button parentMethod={downloadCV}>
-            Download CV
-          </Button>
+    <div className="api-layout">
+      <aside className="api-sidebar">
+        <div className="sidebar-header">
+          <span className="api-version">v1.0.0</span>
+          <h2>Diego API</h2>
         </div>
-      </section>
+        <nav className="sidebar-nav">
+          {sections.map((s) => (
+            <a key={s.id} href={`#${s.id}`} className="sidebar-link">
+              <span className={`method method-${s.method.toLowerCase()}`}>{s.method}</span>
+              <span className="path">{s.path}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
 
-      <section className="projects" id="projects">
-        <h2 className="section-title">Projects</h2>
-        {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} />
-        ))}
-      </section>
+      <main className="api-content">
+        <section className="endpoint-section" id="about">
+          <div className="endpoint-header">
+            <span className="method method-get">GET</span>
+            <span className="endpoint-path">/about</span>
+            <span className="endpoint-desc">Returns developer information</span>
+          </div>
+          <div className="response-block">
+            <div className="response-header">
+              <span className="status-code">200</span> OK
+            </div>
+            <pre className="json-response">
+{`{
+  "name": "${aboutData.name}",
+  "role": "${aboutData.role}",
+  "stack": ${JSON.stringify(aboutData.stack, null, 4).replace(/\n/g, '\n  ')},
+  "environment": {
+    "os": "${aboutData.os}",
+    "editor": "${aboutData.editor}"
+  },
+  "status": "${aboutData.status}"
+}`}
+            </pre>
+          </div>
+        </section>
 
-      <section id="skills">
-        <Skills />
-      </section>
+        <section className="endpoint-section" id="projects">
+          <div className="endpoint-header">
+            <span className="method method-get">GET</span>
+            <span className="endpoint-path">/projects</span>
+            <span className="endpoint-desc">Returns all projects</span>
+          </div>
+          <div className="response-block">
+            <div className="response-header">
+              <span className="status-code">200</span> OK &middot; {projects.length} results
+            </div>
+          </div>
+          <div className="projects-list">
+            {projects.map((project, index) => (
+              <ProjectCard key={index} {...project} index={index} />
+            ))}
+          </div>
+        </section>
 
-      <section id="footer">
+        <section className="endpoint-section" id="skills">
+          <div className="endpoint-header">
+            <span className="method method-get">GET</span>
+            <span className="endpoint-path">/skills?group=true</span>
+            <span className="endpoint-desc">Returns skills grouped by category</span>
+          </div>
+          <Skills />
+        </section>
+
+        <section className="endpoint-section" id="contact">
+          <div className="endpoint-header">
+            <span className="method method-post">POST</span>
+            <span className="endpoint-path">/contact</span>
+            <span className="endpoint-desc">Get in touch</span>
+          </div>
+          <div className="contact-links">
+            <a href={aboutData.links.linkedin} target="_blank" rel="noopener noreferrer" className="contact-btn">
+              LinkedIn
+            </a>
+            <a href={aboutData.links.github} target="_blank" rel="noopener noreferrer" className="contact-btn">
+              GitHub
+            </a>
+            <button onClick={downloadCV} className="contact-btn">
+              Download CV
+            </button>
+          </div>
+        </section>
+
         <Footer />
-      </section>
+      </main>
     </div>
   )
 }

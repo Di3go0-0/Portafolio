@@ -5,4 +5,5 @@ export interface IProjectProps {
   technologies: string[]
   highlights: string[]
   githubUrl: string
+  index?: number
 }

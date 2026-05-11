@@ -1,33 +1,26 @@
 import './Project.css'
 import { IProjectProps } from '../../Interfaces'
 
-export const ProjectCard = ({ title, description, architecture, technologies, highlights, githubUrl }: IProjectProps) => {
+export const ProjectCard = ({ title, description, architecture, technologies, highlights, githubUrl, index = 0 }: IProjectProps) => {
   return (
-    <article className="project-card">
-      <div className="project-header">
-        <h3>{title}</h3>
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="github-link">
-          GitHub
-        </a>
+    <div className="api-project">
+      <div className="response-block">
+        <div className="response-header">
+          <span className="status-code">200</span> projects[{index}]
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="project-github">
+            GitHub ↗
+          </a>
+        </div>
+        <pre className="json-response">
+{`{
+  "name": "${title}",
+  "description": "${description}",
+  "architecture": "${architecture}",
+  "stack": ${JSON.stringify(technologies)},
+  "highlights": ${JSON.stringify(highlights, null, 4).replace(/\n/g, '\n  ')}
+}`}
+        </pre>
       </div>
-
-      <p className="project-description">{description}</p>
-
-      <div className="project-architecture">
-        <span className="arch-label">Architecture:</span> {architecture}
-      </div>
-
-      <div className="project-technologies">
-        {technologies.map((tech, index) => (
-          <span key={index} className="tech-badge">{tech}</span>
-        ))}
-      </div>
-
-      <ul className="project-highlights">
-        {highlights.map((highlight, index) => (
-          <li key={index}>{highlight}</li>
-        ))}
-      </ul>
-    </article>
+    </div>
   )
 }
