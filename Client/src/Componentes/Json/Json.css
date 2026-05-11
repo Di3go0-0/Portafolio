@@ -5,10 +5,10 @@
   font-size: 0.85rem;
   line-height: 1.7;
   overflow-x: auto;
-  color: #e0e0e0;
+  color: var(--color-text);
 }
 
-.json-key { color: #8be9fd; }
-.json-string { color: #50fa7b; }
-.json-number { color: #bd93f9; }
-.json-bool { color: #ffb86c; }
+.json-key { color: var(--color-sky); }
+.json-string { color: var(--color-green); }
+.json-number { color: var(--color-mauve); }
+.json-bool { color: var(--color-peach); }

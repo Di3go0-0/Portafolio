@@ -10,9 +10,9 @@
     left: 0;
     right: 0;
     z-index: 50;
-    background-color: rgba(10, 10, 18, 0.95);
+    background-color: var(--color-bg-sidebar);
     backdrop-filter: blur(4px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   .navbar-container {
@@ -27,7 +27,7 @@
   }
 
   .navbar-logo a {
-    color: #fff;
+    color: var(--color-text);
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
@@ -37,7 +37,7 @@
   .navbar-links .github {
     display: inline-flex;
     align-items: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-text-muted);
     text-decoration: none;
   }
 
