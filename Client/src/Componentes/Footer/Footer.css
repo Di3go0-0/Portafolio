@@ -1,49 +1,88 @@
-.footer {
-  background-color: var(--color-bg-dark);
-  padding: 2rem;
-  color: white;
-  width: 100vw;
+.api-footer {
+  margin-top: 2rem;
+  padding: 0 0 1.5rem;
+}
+
+.footer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin-bottom: 1.2rem;
 }
 
 .footer-content {
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
 
-.social-icons {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.social-icon-wrapper {
+.footer-left {
   display: flex;
   align-items: center;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.6);
-  transition: color 0.3s ease;
+  gap: 0.5rem;
 }
 
-.social-icon-wrapper:hover {
-  color: #fff;
+.footer-brand {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.social-icon {
-  width: 20px;
-  height: 20px;
+.footer-version {
+  color: #50fa7b;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  background: rgba(80, 250, 123, 0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 
-.copyright {
+.footer-status {
+  color: rgba(80, 250, 123, 0.6);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+}
+
+.footer-separator {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.7rem;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-link {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 0.8rem;
-  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #8be9fd;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.footer-copy {
+  color: rgba(255, 255, 255, 0.25);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
 }
 
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }

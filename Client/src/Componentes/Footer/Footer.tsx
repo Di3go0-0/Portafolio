@@ -1,21 +1,28 @@
-import { Github, Linkedin } from 'lucide-react'
 import './Footer.css'
 
 export function Footer() {
   return (
-    <footer className="footer">
+    <footer className="api-footer">
+      <div className="footer-divider" />
       <div className="footer-content">
-        <div className="social-icons">
-          <a href="https://www.linkedin.com/in/di3go00/" target="_blank" rel="noopener noreferrer" className="social-icon-wrapper">
-            <Linkedin className="social-icon" aria-hidden="true" />
-            <span className="sr-only">LinkedIn</span>
+        <div className="footer-left">
+          <span className="footer-brand">Diego API</span>
+          <span className="footer-version">v1.0.0</span>
+          <span className="footer-separator">&middot;</span>
+          <span className="footer-status">All systems operational</span>
+        </div>
+        <div className="footer-links">
+          <a href="https://github.com/Di3go0-0" target="_blank" rel="noopener noreferrer" className="footer-link">
+            GitHub
           </a>
-          <a href="https://github.com/Di3go0-0" target="_blank" rel="noopener noreferrer" className="social-icon-wrapper">
-            <Github className="social-icon" aria-hidden="true" />
-            <span className="sr-only">GitHub</span>
+          <span className="footer-separator">&middot;</span>
+          <a href="https://linkedin.com/in/di3go00" target="_blank" rel="noopener noreferrer" className="footer-link">
+            LinkedIn
           </a>
         </div>
-        <p className="copyright">Diego Rincon - &copy; {new Date().getFullYear()}</p>
+        <div className="footer-right">
+          <span className="footer-copy">&copy; {new Date().getFullYear()} Diego Rincon</span>
+        </div>
       </div>
     </footer>
   )

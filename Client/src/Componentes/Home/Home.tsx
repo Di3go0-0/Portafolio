@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import './Home.css'
 import { Skills } from '../Skills/Skills'
 import { Footer } from '../Footer/Footer'
@@ -68,17 +68,66 @@ const downloadCV = () => {
   })
 }
 
+interface ParamDef {
+  name: string
+  placeholder: string
+  description: string
+}
+
 interface EndpointProps {
   method: string
   path: string
   description: string
   id: string
   curl?: string
+  params?: ParamDef[]
+  onExecute?: (params: Record<string, string>) => void
   children: React.ReactNode
 }
 
-const Endpoint = ({ method, path, description, id, curl, children }: EndpointProps) => {
-  const [open, setOpen] = useState(true)
+const Endpoint = ({ method, path, description, id, curl, params, onExecute, children }: EndpointProps) => {
+  const [open, setOpen] = useState(false)
+  const [tryMode, setTryMode] = useState(false)
+  const [executed, setExecuted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [paramValues, setParamValues] = useState<Record<string, string>>({})
+
+  const handleExecute = useCallback(() => {
+    setLoading(true)
+    onExecute?.(paramValues)
+    setTimeout(() => {
+      setLoading(false)
+      setExecuted(true)
+    }, 400)
+  }, [paramValues, onExecute])
+
+  const handleCancel = useCallback(() => {
+    setTryMode(false)
+    setExecuted(false)
+    setLoading(false)
+    setParamValues({})
+    onExecute?.({})
+  }, [onExecute])
+
+  const handleClear = useCallback(() => {
+    setExecuted(false)
+    setLoading(false)
+  }, [])
+
+  const buildCurl = () => {
+    if (!curl) return ''
+    let result = curl
+    if (params) {
+      const filled = Object.entries(paramValues).filter(([, v]) => v.trim())
+      if (filled.length > 0) {
+        const queryStr = filled.map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')
+        result = result.replace(/(https:\/\/diego\.dev\/[^\s'\\]+)/, (match) => {
+          return match.includes('?') ? `${match}&${queryStr}` : `${match}?${queryStr}`
+        })
+      }
+    }
+    return result
+  }
 
   return (
     <section className="endpoint-section" id={id}>
@@ -92,15 +141,69 @@ const Endpoint = ({ method, path, description, id, curl, children }: EndpointPro
       </button>
       {open && (
         <div className="endpoint-body">
+          {params && params.length > 0 && (
+            <div className="params-section">
+              <div className="params-header">Parameters</div>
+              <div className="params-table">
+                {params.map((p) => (
+                  <div key={p.name} className="param-row">
+                    <div className="param-info">
+                      <span className="param-name">{p.name}</span>
+                      <span className="param-type">string</span>
+                      <span className="param-desc">{p.description}</span>
+                    </div>
+                    {tryMode && (
+                      <input
+                        type="text"
+                        className="param-input"
+                        placeholder={p.placeholder}
+                        value={paramValues[p.name] || ''}
+                        onChange={(e) => setParamValues({ ...paramValues, [p.name]: e.target.value })}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="tryout-bar">
+            {!tryMode ? (
+              <button className="tryout-btn" onClick={() => setTryMode(true)}>
+                Try it out
+              </button>
+            ) : (
+              <div className="tryout-actions">
+                <button className="execute-btn" onClick={handleExecute} disabled={loading}>
+                  {loading ? 'Sending...' : 'Execute'}
+                </button>
+                <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+                {executed && (
+                  <button className="clear-btn" onClick={handleClear}>Clear</button>
+                )}
+              </div>
+            )}
+          </div>
+
           {curl && (
             <div className="curl-block">
               <div className="curl-header">Request</div>
-              <pre className="curl-code">{curl}</pre>
+              <pre className="curl-code">{buildCurl()}</pre>
             </div>
           )}
-          <div className="response-wrapper">
-            {children}
-          </div>
+
+          {loading && (
+            <div className="response-loading">
+              <div className="loading-spinner" />
+              <span>Loading response...</span>
+            </div>
+          )}
+
+          {executed && !loading && (
+            <div className="response-wrapper">
+              {children}
+            </div>
+          )}
         </div>
       )}
     </section>
@@ -115,7 +218,7 @@ const sections = [
   { id: 'contact', method: 'POST', path: '/contact' },
 ]
 
-const aboutResponse = {
+const fullAboutResponse = {
   name: 'Diego Rincón',
   role: 'Backend Developer',
   stack: ['TypeScript', 'NestJS', '.NET', 'Rust'],
@@ -128,7 +231,43 @@ const aboutResponse = {
 const ossProjects = projects.filter(p => p.highlights.includes('Open source'))
 const apiProjects = projects.filter(p => !p.highlights.includes('Open source'))
 
+const filterProjects = (list: IProjectProps[], query: string): IProjectProps[] => {
+  if (!query.trim()) return list
+  const q = query.toLowerCase()
+  return list.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    p.description.toLowerCase().includes(q) ||
+    p.architecture.toLowerCase().includes(q) ||
+    p.technologies.some(t => t.toLowerCase().includes(q)) ||
+    p.highlights.some(h => h.toLowerCase().includes(q))
+  )
+}
+
+const filterAbout = (field: string): object => {
+  if (!field.trim()) return fullAboutResponse
+  const key = field.toLowerCase()
+  const matched: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(fullAboutResponse)) {
+    if (k.toLowerCase().includes(key)) {
+      matched[k] = v
+    }
+  }
+  if (Object.keys(matched).length === 0) {
+    return { error: 'No matching fields', available_fields: Object.keys(fullAboutResponse) }
+  }
+  return matched
+}
+
 export const Home = () => {
+  const [projectQuery, setProjectQuery] = useState('')
+  const [ossQuery, setOssQuery] = useState('')
+  const [aboutField, setAboutField] = useState('')
+  const [skillsCategory, setSkillsCategory] = useState('')
+
+  const filteredApiProjects = filterProjects(apiProjects, projectQuery)
+  const filteredOssProjects = filterProjects(ossProjects, ossQuery)
+  const aboutResponse = filterAbout(aboutField)
+
   return (
     <div className="api-layout">
       <aside className="api-sidebar">
@@ -178,6 +317,10 @@ export const Home = () => {
           id="about"
           curl="curl -X GET https://diego.dev/about \
   -H 'Accept: application/json'"
+          params={[
+            { name: 'field', placeholder: 'e.g. stack, databases, aws', description: 'Filter response by field name' },
+          ]}
+          onExecute={(p) => setAboutField(p.field || '')}
         >
           <div className="response-block">
             <div className="response-header">
@@ -194,17 +337,32 @@ export const Home = () => {
           id="projects"
           curl={`curl -X GET https://diego.dev/projects \\
   -H 'Accept: application/json'`}
+          params={[
+            { name: 'q', placeholder: 'e.g. tenant, nestjs, production', description: 'Search projects by keyword' },
+          ]}
+          onExecute={(p) => setProjectQuery(p.q || '')}
         >
-          <div className="response-block">
-            <div className="response-header">
-              <span className="status-code">200</span> OK &middot; {apiProjects.length} results
+          {filteredApiProjects.length > 0 ? (
+            <>
+              <div className="response-block">
+                <div className="response-header">
+                  <span className="status-code">200</span> OK &middot; {filteredApiProjects.length} results
+                </div>
+              </div>
+              <div className="projects-list">
+                {filteredApiProjects.map((project, index) => (
+                  <ProjectCard key={project.title} {...project} index={index} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="response-block">
+              <div className="response-header">
+                <span className="status-code">200</span> OK &middot; 0 results
+              </div>
+              <JsonBlock data={{ results: [], query: projectQuery, message: 'No projects match your search' }} />
             </div>
-          </div>
-          <div className="projects-list">
-            {apiProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} index={index} />
-            ))}
-          </div>
+          )}
         </Endpoint>
 
         <Endpoint
@@ -214,17 +372,32 @@ export const Home = () => {
           id="projects-oss"
           curl={`curl -X GET 'https://diego.dev/projects?type=oss' \\
   -H 'Accept: application/json'`}
+          params={[
+            { name: 'q', placeholder: 'e.g. rust, vim, database', description: 'Search OSS projects by keyword' },
+          ]}
+          onExecute={(p) => setOssQuery(p.q || '')}
         >
-          <div className="response-block">
-            <div className="response-header">
-              <span className="status-code">200</span> OK &middot; {ossProjects.length} results
+          {filteredOssProjects.length > 0 ? (
+            <>
+              <div className="response-block">
+                <div className="response-header">
+                  <span className="status-code">200</span> OK &middot; {filteredOssProjects.length} results
+                </div>
+              </div>
+              <div className="projects-list">
+                {filteredOssProjects.map((project, index) => (
+                  <ProjectCard key={project.title} {...project} index={index} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="response-block">
+              <div className="response-header">
+                <span className="status-code">200</span> OK &middot; 0 results
+              </div>
+              <JsonBlock data={{ results: [], query: ossQuery, message: 'No projects match your search' }} />
             </div>
-          </div>
-          <div className="projects-list">
-            {ossProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} index={index} />
-            ))}
-          </div>
+          )}
         </Endpoint>
 
         <Endpoint
@@ -234,8 +407,12 @@ export const Home = () => {
           id="skills"
           curl={`curl -X GET 'https://diego.dev/skills?group=true' \\
   -H 'Accept: application/json'`}
+          params={[
+            { name: 'category', placeholder: 'e.g. languages, databases, aws', description: 'Filter by skill category' },
+          ]}
+          onExecute={(p) => setSkillsCategory(p.category || '')}
         >
-          <Skills />
+          <Skills category={skillsCategory} />
         </Endpoint>
 
         <Endpoint
@@ -247,6 +424,12 @@ export const Home = () => {
   -H 'Content-Type: application/json' \\
   -d '{"via": "linkedin"}'`}
         >
+          <div className="response-block">
+            <div className="response-header">
+              <span className="status-code">200</span> OK
+            </div>
+            <JsonBlock data={{ message: 'Choose a contact method', status: 'ready' }} />
+          </div>
           <div className="contact-links">
             <a href="https://linkedin.com/in/di3go00" target="_blank" rel="noopener noreferrer" className="contact-btn">
               LinkedIn

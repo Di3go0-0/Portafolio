@@ -284,6 +284,200 @@
   gap: 0.8rem;
 }
 
+/* ─── Parameters section ─── */
+.params-section {
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.params-header {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.params-table {
+  padding: 0;
+}
+
+.param-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.param-row:last-child {
+  border-bottom: none;
+}
+
+.param-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.param-name {
+  color: #f8f8f2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.param-type {
+  color: rgba(139, 233, 253, 0.6);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  background: rgba(139, 233, 253, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.param-desc {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.75rem;
+}
+
+.param-input {
+  background: rgba(5, 5, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8f8f2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  min-width: 200px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.param-input:focus {
+  border-color: rgba(139, 233, 253, 0.4);
+}
+
+.param-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Try it out bar ─── */
+.tryout-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tryout-btn {
+  background: transparent;
+  border: 1px solid rgba(139, 233, 253, 0.4);
+  color: #8be9fd;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tryout-btn:hover {
+  background: rgba(139, 233, 253, 0.08);
+  border-color: #8be9fd;
+}
+
+.tryout-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.execute-btn {
+  background: rgba(80, 250, 123, 0.15);
+  border: 1px solid rgba(80, 250, 123, 0.4);
+  color: #50fa7b;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.execute-btn:hover:not(:disabled) {
+  background: rgba(80, 250, 123, 0.25);
+}
+
+.execute-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.cancel-btn:hover {
+  border-color: rgba(255, 85, 85, 0.4);
+  color: #ff5555;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 184, 108, 0.3);
+  color: #ffb86c;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.clear-btn:hover {
+  background: rgba(255, 184, 108, 0.08);
+}
+
+/* ─── Loading spinner ─── */
+.response-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(139, 233, 253, 0.2);
+  border-top-color: #8be9fd;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ─── Contact ─── */
 .contact-links {
   display: flex;
