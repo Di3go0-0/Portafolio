@@ -24,19 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          # Si el package.json está dentro de Client, apunta ahí:
-          cache-dependency-path: './Client/package-lock.json'
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies and Build
         run: |
           cd Client
-          npm install
-          npm run build
+          bun install
+          bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
