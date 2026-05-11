@@ -118,9 +118,11 @@ const sections = [
 const aboutResponse = {
   name: 'Diego Rincón',
   role: 'Backend Developer',
-  stack: ['Rust', 'TypeScript', 'NestJS', 'FastAPI', 'PostgreSQL', 'AWS'],
-  environment: { os: 'Arch Linux', editor: 'Neovim', shell: 'Bash' },
-  status: 'Systems & Computing Engineering Student',
+  stack: ['TypeScript', 'NestJS', 'PostgreSQL', 'Rust'],
+  databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Oracle', 'Redis'],
+  aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
+  environment: { os: 'Arch Linux', editor: 'Neovim', shell: 'Fish' },
+  status: 'Systems & Computing Engineer',
 }
 
 const ossProjects = projects.filter(p => p.highlights.includes('Open source'))

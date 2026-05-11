@@ -2,11 +2,11 @@ import './Skills.css'
 import { JsonBlock } from '../Json/Json'
 
 const skillsData = {
-  languages: ['Rust', 'TypeScript', 'Python', 'C#'],
-  frameworks: ['NestJS', 'FastAPI', '.NET Core', 'Express'],
-  databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
-  aws: ['S3', 'DynamoDB', 'SQS', 'Lambda'],
-  infrastructure: ['Docker', 'Linux (Arch)', 'Bash', 'Git'],
+  languages: ['TypeScript', 'Python', 'C#', 'Rust'],
+  frameworks: ['NestJS', '.NET Core', 'Express'],
+  databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Oracle', 'Redis'],
+  aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
+  infrastructure: ['Docker', 'Linux (Arch)', 'Fish', 'Git'],
   tools: ['Neovim', 'Prisma', 'Swagger', 'Ratatui'],
 }
 
