@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import './Home.css'
 import { Skills } from '../Skills/Skills'
 import { Footer } from '../Footer/Footer'
@@ -243,6 +243,16 @@ const filterProjects = (list: IProjectProps[], query: string): IProjectProps[] =
   )
 }
 
+const themes = [
+  { id: 'catppuccin', label: 'Catppuccin Mocha' },
+  { id: 'dracula', label: 'Dracula' },
+  { id: 'nord', label: 'Nord' },
+  { id: 'tokyo-night', label: 'Tokyo Night' },
+  { id: 'gruvbox', label: 'Gruvbox Dark' },
+  { id: 'one-dark', label: 'One Dark Pro' },
+  { id: 'rose-pine', label: 'Rosé Pine' },
+]
+
 const filterAbout = (field: string): object => {
   if (!field.trim()) return fullAboutResponse
   const key = field.toLowerCase()
@@ -259,10 +269,16 @@ const filterAbout = (field: string): object => {
 }
 
 export const Home = () => {
+  const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'catppuccin')
   const [projectQuery, setProjectQuery] = useState('')
   const [ossQuery, setOssQuery] = useState('')
   const [aboutField, setAboutField] = useState('')
   const [skillsCategory, setSkillsCategory] = useState('')
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('portfolio-theme', theme)
+  }, [theme])
 
   const filteredApiProjects = filterProjects(apiProjects, projectQuery)
   const filteredOssProjects = filterProjects(ossProjects, ossQuery)
@@ -304,9 +320,23 @@ export const Home = () => {
             <span className="server-label">Server</span>
             <span className="server-url">https://diego.dev</span>
           </div>
-          <div className="auth-badge">
-            <span className="auth-lock">&#128274;</span>
-            Authorized
+          <div className="topbar-right">
+            <div className="theme-selector">
+              <span className="theme-label">Theme</span>
+              <select
+                className="theme-select"
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+              >
+                {themes.map((t) => (
+                  <option key={t.id} value={t.id}>{t.label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="auth-badge">
+              <span className="auth-lock">&#128274;</span>
+              Authorized
+            </div>
           </div>
         </div>
 
