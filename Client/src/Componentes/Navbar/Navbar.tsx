@@ -1,14 +1,13 @@
 import { Github } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import './nav.css'
 
 export const Navbar = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar" aria-label="Main navigation">
       <div className="navbar-container">
         <div className="navbar-content">
           <div className="navbar-logo">
-            <Link to="/Portafolio">Di3go0-0</Link>
+            <a href="#home">Di3go0-0</a>
           </div>
 
           <div className="links-container">
@@ -25,10 +24,10 @@ export const Navbar = () => {
               Projects
             </a>
             <a
-              href="#about"
+              href="#skills"
               className="link"
             >
-              About
+              Skills
             </a>
           </div>
 
@@ -39,7 +38,8 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               className="github"
             >
-              <Github className="icon" />
+              <Github className="icon" aria-hidden="true" />
+              <span className="sr-only">GitHub Profile</span>
             </a>
           </div>
         </div>

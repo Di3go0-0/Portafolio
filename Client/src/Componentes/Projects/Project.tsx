@@ -1,30 +1,33 @@
 import './Project.css'
 import { IProjectProps } from '../../Interfaces'
 
-
-export const ProjectCard = (Project: IProjectProps) => {
+export const ProjectCard = ({ title, description, architecture, technologies, highlights, githubUrl }: IProjectProps) => {
   return (
     <article className="project-card">
-      <div className="project-image">
-        <img src={Project.image} alt={Project.title} />
-      </div>
-      <div className="project-content">
-        <h3>{Project.title}</h3>
-        <div className="description">
-          <p>{Project.description}</p>
-        </div>
-        <div className="technologies">
-          {Project.technologies.map((tech, index) => (
-            <div key={index} className="tech-item">
-              <img src={tech.icon} alt={tech.name} title={tech.name} />
-            </div>
-          ))}
-        </div>
-        <a href={Project.githubUrl} className="github-link" target="_blank" rel="noopener noreferrer">
+      <div className="project-header">
+        <h3>{title}</h3>
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="github-link">
           GitHub
         </a>
       </div>
+
+      <p className="project-description">{description}</p>
+
+      <div className="project-architecture">
+        <span className="arch-label">Architecture:</span> {architecture}
+      </div>
+
+      <div className="project-technologies">
+        {technologies.map((tech, index) => (
+          <span key={index} className="tech-badge">{tech}</span>
+        ))}
+      </div>
+
+      <ul className="project-highlights">
+        {highlights.map((highlight, index) => (
+          <li key={index}>{highlight}</li>
+        ))}
+      </ul>
     </article>
   )
 }
-

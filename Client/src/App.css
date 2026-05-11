@@ -1,6 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Poppins:wght@300;400;500;600;700&display=swap');
 
+:root {
+  --color-bg-dark: #01080E;
+  --color-bg-primary: #0D071E;
+  --color-accent: #6a3cac;
+  --color-accent-light: #7c3cd9;
+  --color-accent-btn: #5a2ca6;
+  --color-text: #fff;
+  --color-text-muted: #9ba8a7;
+  --color-scrollbar: #0c0140;
+}
 
+body {
+  background: var(--color-bg-primary);
+}
 
 .App {
   display: flex;
@@ -15,4 +28,16 @@
   scroll-behavior: smooth;
   scrollbar-width: thin;
   overflow-x: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
