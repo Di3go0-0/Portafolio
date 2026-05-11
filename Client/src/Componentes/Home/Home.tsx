@@ -118,10 +118,10 @@ const sections = [
 const aboutResponse = {
   name: 'Diego Rincón',
   role: 'Backend Developer',
-  stack: ['TypeScript', 'NestJS', 'PostgreSQL', 'Rust'],
-  databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Oracle', 'Redis'],
+  stack: ['TypeScript', 'NestJS', '.NET', 'Rust'],
+  databases: ['Oracle', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
   aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
-  environment: { os: 'Arch Linux', editor: 'Neovim', shell: 'Fish' },
+  environment: { os: 'Arch Linux', wm: 'Hyprland', editor: 'Neovim', shell: 'Fish' },
   status: 'Systems & Computing Engineer',
 }
 

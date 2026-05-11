@@ -4,7 +4,7 @@ import { JsonBlock } from '../Json/Json'
 const skillsData = {
   languages: ['TypeScript', 'Python', 'C#', 'Rust'],
   frameworks: ['NestJS', '.NET Core', 'Express'],
-  databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Oracle', 'Redis'],
+  databases: ['Oracle', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
   aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
   infrastructure: ['Docker', 'Linux (Arch)', 'Fish', 'Git'],
   tools: ['Neovim', 'Prisma', 'Swagger', 'Ratatui'],
