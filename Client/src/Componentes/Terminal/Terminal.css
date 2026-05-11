@@ -1,0 +1,84 @@
+.terminal {
+  width: min(700px, 90vw);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(30, 30, 30, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+
+.terminal-title {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+.terminal-body {
+  background: rgba(15, 15, 20, 0.95);
+  padding: 20px;
+  min-height: 220px;
+}
+
+.terminal-line {
+  line-height: 1.8;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+.terminal-line.command {
+  color: #50fa7b;
+}
+
+.terminal-line.output {
+  color: #8be9fd;
+  padding-left: 1rem;
+}
+
+.cursor {
+  color: #50fa7b;
+  font-size: 0.9rem;
+}
+
+.cursor.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .terminal-body {
+    padding: 14px;
+    min-height: 180px;
+  }
+
+  .terminal-line {
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+}

@@ -1,10 +1,9 @@
 export interface IProjectProps {
-  image: string
   title: string
   description: string
-  technologies: {
-    name: string
-    icon: string
-  }[]
+  architecture: string
+  technologies: string[]
+  highlights: string[]
   githubUrl: string
+  index?: number
 }

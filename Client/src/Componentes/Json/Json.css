@@ -1,0 +1,14 @@
+.json-highlighted {
+  padding: 1.2rem;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  color: #e0e0e0;
+}
+
+.json-key { color: #8be9fd; }
+.json-string { color: #50fa7b; }
+.json-number { color: #bd93f9; }
+.json-bool { color: #ffb86c; }

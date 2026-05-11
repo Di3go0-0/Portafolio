@@ -1,30 +1,27 @@
 import './Project.css'
 import { IProjectProps } from '../../Interfaces'
+import { JsonBlock } from '../Json/Json'
 
+export const ProjectCard = ({ title, description, architecture, technologies, highlights, githubUrl, index = 0 }: IProjectProps) => {
+  const data = {
+    name: title,
+    description,
+    architecture,
+    stack: technologies,
+    highlights,
+  }
 
-export const ProjectCard = (Project: IProjectProps) => {
   return (
-    <article className="project-card">
-      <div className="project-image">
-        <img src={Project.image} alt={Project.title} />
-      </div>
-      <div className="project-content">
-        <h3>{Project.title}</h3>
-        <div className="description">
-          <p>{Project.description}</p>
+    <div className="api-project">
+      <div className="response-block">
+        <div className="response-header">
+          <span className="status-code">200</span> projects[{index}]
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="project-github">
+            GitHub ↗
+          </a>
         </div>
-        <div className="technologies">
-          {Project.technologies.map((tech, index) => (
-            <div key={index} className="tech-item">
-              <img src={tech.icon} alt={tech.name} title={tech.name} />
-            </div>
-          ))}
-        </div>
-        <a href={Project.githubUrl} className="github-link" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
+        <JsonBlock data={data} />
       </div>
-    </article>
+    </div>
   )
 }
-

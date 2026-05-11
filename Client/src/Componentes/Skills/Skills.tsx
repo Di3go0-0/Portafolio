@@ -1,77 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import "./Skills.css";
+import './Skills.css'
+import { JsonBlock } from '../Json/Json'
 
-const SkillsCarousel = () => {
-  const [isPaused, setIsPaused] = useState(false);
-  const skillsListRef = useRef<HTMLDivElement>(null);
+const skillsData = {
+  languages: ['TypeScript', 'Python', 'C#', 'Rust'],
+  frameworks: ['NestJS', '.NET Core', 'Express'],
+  databases: ['Oracle', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
+  aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
+  infrastructure: ['Docker', 'Linux (Arch)', 'Fish', 'Git'],
+  tools: ['Neovim', 'Prisma', 'Swagger', 'Ratatui'],
+}
 
-  const skills = [
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
-  ];
-
-  // Duplicamos las imágenes para crear un efecto continuo
-  const duplicatedSkills = [...skills, ...skills, ...skills];
-
-  useEffect(() => {
-    if (!isPaused) {
-      const interval = setInterval(() => {
-        if (skillsListRef.current) {
-          const { scrollLeft, scrollWidth, clientWidth } = skillsListRef.current;
-
-          // Si llega al final, reinicia el scroll
-          if (scrollLeft + clientWidth >= scrollWidth) {
-            skillsListRef.current.scrollLeft = 0;
-          } else {
-            // Avanza el scroll
-            skillsListRef.current.scrollLeft += 1;
-          }
-        }
-      }, 5); // Velocidad del scroll
-
-      return () => clearInterval(interval);
-    }
-  }, [isPaused]);
-
-  const handleMouseEnter = () => setIsPaused(true);
-  const handleMouseLeave = () => setIsPaused(false);
-
+export const Skills = () => {
   return (
-    <section className="skills-section">
-      <div className="skills-container">
-        <div
-          className="skills-list"
-          ref={skillsListRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {duplicatedSkills.map((skill, index) => (
-            <img
-              key={index}
-              src={skill}
-              alt={`Skill ${index + 1}`}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            />
-          ))}
-        </div>
+    <div className="response-block">
+      <div className="response-header">
+        <span className="status-code">200</span> OK &middot; 6 categories
       </div>
-    </section>
-  );
-};
-
-export default SkillsCarousel;
-
+      <JsonBlock data={skillsData} />
+    </div>
+  )
+}
