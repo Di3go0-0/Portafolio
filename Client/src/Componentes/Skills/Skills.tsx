@@ -6,11 +6,12 @@ interface SkillCategory {
 }
 
 const categories: SkillCategory[] = [
-  { label: 'Languages', skills: ['TypeScript', 'Python', 'C#', 'JavaScript'] },
+  { label: 'Languages', skills: ['TypeScript', 'Rust', 'Python', 'C#'] },
   { label: 'Frameworks', skills: ['NestJS', 'FastAPI', '.NET Core', 'Express'] },
   { label: 'Databases', skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis'] },
-  { label: 'Infrastructure', skills: ['Docker', 'Linux', 'Bash', 'Git'] },
-  { label: 'Tools', skills: ['Prisma', 'Swagger', 'JWT', 'Neovim'] },
+  { label: 'AWS', skills: ['S3', 'DynamoDB', 'SQS', 'Lambda'] },
+  { label: 'Infrastructure', skills: ['Docker', 'Linux (Arch)', 'Bash', 'Git'] },
+  { label: 'Tools', skills: ['Neovim', 'Prisma', 'Swagger', 'Ratatui'] },
 ]
 
 export const Skills = () => {

@@ -8,6 +8,22 @@ import { ProjectCard } from '../Projects/Project'
 
 const projects: IProjectProps[] = [
   {
+    title: 'restui',
+    description: 'Terminal UI HTTP client with full Vim keybindings. A Vim-friendly alternative to Postman/Insomnia that runs entirely in the terminal.',
+    architecture: 'Rust TUI with ratatui + async HTTP via reqwest + custom Vim modal editor',
+    technologies: ['Rust', 'Ratatui', 'Tokio', 'Reqwest'],
+    highlights: ['Open source', 'Full Vim modal editing (normal/insert/visual)', 'Request chaining with variable extraction', '.http file collections', 'Syntax-highlighted responses', 'Neovim plugin integration', 'Environment profiles', 'Fuzzy matching autocomplete'],
+    githubUrl: 'https://github.com/Di3go0-0/restui',
+  },
+  {
+    title: 'dbtui',
+    description: 'Terminal-based database client combining DBeaver\'s depth with lazygit\'s UX. Browse schemas, write SQL, and explore data from the terminal.',
+    architecture: 'Rust TUI with ratatui + sqlx for multi-DB support + encrypted credential storage',
+    technologies: ['Rust', 'Ratatui', 'SQLx', 'Tokio'],
+    highlights: ['Open source', 'Multi-DB: PostgreSQL, MySQL, Oracle', 'Vim-style SQL editor with syntax highlighting', 'Schema explorer (tables, views, packages, functions)', 'Smart query execution at cursor', 'Encrypted credentials (ChaCha20 + Argon2)', 'Multiple result tabs', '6 built-in themes'],
+    githubUrl: 'https://github.com/Di3go0-0/dbtui',
+  },
+  {
     title: 'Tenant Platform API',
     description: 'Production-ready multi-tenant SaaS backend with tenant isolation, access control, usage limits, and audit logging.',
     architecture: 'Guard chain: JWT → Tenant isolation → Rate limiting → RBAC',

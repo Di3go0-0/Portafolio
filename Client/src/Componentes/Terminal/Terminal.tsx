@@ -9,11 +9,13 @@ interface TerminalLine {
 const lines: TerminalLine[] = [
   { type: 'command', text: '$ whoami' },
   { type: 'output', text: 'Diego Rincón — Backend Developer' },
-  { type: 'command', text: '$ cat skills.txt' },
-  { type: 'output', text: 'NestJS, .NET, FastAPI, PostgreSQL, Redis, Docker' },
+  { type: 'command', text: '$ cat stack.txt' },
+  { type: 'output', text: 'Rust, TypeScript, NestJS, FastAPI, PostgreSQL, AWS' },
+  { type: 'command', text: '$ uname -a' },
+  { type: 'output', text: 'Arch Linux · Neovim · Open Source contributor' },
   { type: 'command', text: '$ cat status.txt' },
   { type: 'output', text: 'Systems & Computing Engineering Student' },
-  { type: 'output', text: 'Building scalable APIs and multi-tenant platforms' },
+  { type: 'output', text: 'Building TUI tools and scalable backend systems' },
 ]
 
 export const Terminal = () => {
@@ -53,7 +55,7 @@ export const Terminal = () => {
           <span className="dot dot-yellow" />
           <span className="dot dot-green" />
         </div>
-        <span className="terminal-title">diego@portfolio:~</span>
+        <span className="terminal-title">diego@arch:~</span>
       </div>
       <div className="terminal-body">
         {lines.slice(0, visibleLines).map((line, i) => (
