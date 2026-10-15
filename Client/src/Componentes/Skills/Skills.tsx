@@ -2,12 +2,15 @@ import './Skills.css'
 import { JsonBlock } from '../Json/Json'
 
 const skillsData: Record<string, unknown> = {
-  languages: ['TypeScript', 'Python', 'C#', 'Rust'],
-  frameworks: ['NestJS', '.NET Core', 'Express'],
-  databases: ['Oracle', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
-  aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
-  infrastructure: ['Docker', 'Linux (Arch)', 'Fish', 'Git'],
-  tools: ['Neovim', 'Prisma', 'Swagger', 'Ratatui'],
+  languages: ['TypeScript', 'JavaScript', 'SQL', 'C#', 'Rust'],
+  backend: ['Node.js', 'NestJS', 'Express', 'TypeORM', 'Jest', 'Swagger/OpenAPI', '.NET'],
+  architecture: ['Microservices', 'DDD', 'Hexagonal', 'Event-Driven', 'Serverless', 'SAGA', 'Outbox', 'gRPC', 'REST'],
+  cloud: { aws: ['Lambda', 'SQS'], azure: ['Service Bus', 'Azure DevOps'] },
+  databases: ['PostgreSQL', 'SQL Server', 'MySQL', 'Oracle DB', 'MongoDB', 'Redis'],
+  devops: ['Docker', 'CI/CD', 'Git', 'Linux (Arch)'],
+  security: ['JWT', 'RBAC', 'OWASP'],
+  practices: ['SOLID', 'Clean Code', 'Scrum'],
+  tools: ['Neovim', 'Fish', 'Ratatui'],
 }
 
 const filterSkills = (category: string): object => {
