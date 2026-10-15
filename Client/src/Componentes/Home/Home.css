@@ -556,11 +556,70 @@
   .api-content {
     margin-left: 0;
     padding: 1rem;
+    padding-top: calc(50px + 1rem);
   }
 
   .api-topbar {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
+  }
+}
+
+/* ─── Intro header ─── */
+.api-intro {
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 3px solid var(--color-green);
+  border-radius: 6px;
+}
+
+.intro-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.35rem;
+}
+
+.intro-headline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--color-green);
+  margin-bottom: 0.6rem;
+}
+
+.intro-summary {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 70ch;
+}
+
+/* ─── Experience ─── */
+.experience-period {
+  margin-left: auto;
+  color: var(--color-text-faint);
+  font-size: 0.7rem;
+}
+
+/* ─── Sidebar button (Download CV) ─── */
+.sidebar-button {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .api-intro {
+    padding: 1rem;
+  }
+
+  .intro-name {
+    font-size: 1.15rem;
   }
 }

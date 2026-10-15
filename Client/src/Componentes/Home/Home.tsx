@@ -16,28 +16,20 @@ const projects: IProjectProps[] = [
     githubUrl: 'https://github.com/Di3go0-0/tenant-platform-api',
   },
   {
+    title: 'Auth Microservice',
+    description: 'Authentication microservice with vertical fragmentation across three logical databases and SAGA compensations for distributed writes.',
+    architecture: 'NestJS AuthService orchestrating 3 TypeORM connections (emails / passwords / links) with SAGA compensating actions',
+    technologies: ['NestJS', 'TypeScript', 'PostgreSQL', 'TypeORM', 'Docker', 'Swagger'],
+    highlights: ['Vertical fragmentation: 3 isolated databases', 'SAGA pattern with compensating actions', 'One service per data domain', 'Hashed credentials isolated from identities', 'Docker Compose with DB init scripts', 'Swagger UI'],
+    githubUrl: 'https://github.com/Di3go0-0/auth-microservice',
+  },
+  {
     title: 'Chat Hub',
     description: 'Full-stack real-time chat application with WebSocket rooms, online presence tracking, and persistent message history.',
     architecture: 'WebSocket gateway with Socket.IO rooms + REST API for auth & CRUD',
     technologies: ['React', 'NestJS', 'Socket.IO', 'Prisma', 'MySQL', 'Docker'],
     highlights: ['Real-time messaging via WebSocket', 'Room-based chat management', 'Online presence tracking', 'JWT auth with bcrypt', 'Dark/Light theme', 'Material Design UI'],
     githubUrl: 'https://github.com/Di3go0-0/chat-hub',
-  },
-  {
-    title: 'Project Management API',
-    description: 'RESTful API for managing projects, tasks, and teams with role-based access and auto-generated documentation.',
-    architecture: 'Express + Prisma ORM with layered service/controller pattern',
-    technologies: ['Express', 'TypeScript', 'Prisma', 'JWT', 'Swagger'],
-    highlights: ['CRUD for projects, tasks & teams', 'JWT authentication', 'Prisma ORM migrations', 'Swagger auto-documentation'],
-    githubUrl: 'https://github.com/Di3go0-0/ProjectManagement',
-  },
-  {
-    title: 'API RESTful .NET',
-    description: 'REST API built with .NET Core and Entity Framework demonstrating clean architecture patterns.',
-    architecture: '.NET Core Web API with Entity Framework + Repository pattern',
-    technologies: ['.NET Core', 'C#', 'Entity Framework', 'JWT', 'MySQL'],
-    highlights: ['Entity Framework migrations', 'JWT authentication', 'Repository pattern', 'RESTful design'],
-    githubUrl: 'https://github.com/Di3go0-0/LearnNET',
   },
   {
     title: 'restui',
@@ -54,6 +46,63 @@ const projects: IProjectProps[] = [
     technologies: ['Rust', 'Ratatui', 'SQLx', 'Tokio'],
     highlights: ['Open source', 'Multi-DB: PostgreSQL, MySQL, Oracle', 'Vim-style SQL editor with syntax highlighting', 'Schema explorer (tables, views, packages, functions)', 'Smart query execution at cursor', 'Encrypted credentials (ChaCha20 + Argon2)', 'Multiple result tabs', '6 built-in themes'],
     githubUrl: 'https://github.com/Di3go0-0/dbtui',
+  },
+]
+
+interface ExperienceEntry {
+  company: string
+  role: string
+  period: { from: string; to: string }
+  location: string
+  domain: string
+  stack: string[]
+  highlights: string[]
+}
+
+const experience: ExperienceEntry[] = [
+  {
+    company: 'LinkTic',
+    role: 'Backend Developer',
+    period: { from: '2026-05', to: 'present' },
+    location: 'Pereira, Colombia (Hybrid)',
+    domain: 'Financial platform for judicial deposits',
+    stack: ['NestJS', 'TypeScript', 'gRPC', 'Azure Service Bus', 'SQL Server', 'MySQL', 'PostgreSQL', 'Docker', 'Azure DevOps'],
+    highlights: [
+      'Multiple microservices built with DDD / hexagonal architecture',
+      'Inter-service communication via gRPC and event-driven messaging over Azure Service Bus',
+      'SAGA and Outbox patterns for eventual consistency in distributed transactions',
+      'Migrations, seeds and complex queries modeled around financial business rules',
+      'Dockerized deployments through Azure DevOps CI/CD pipelines across DEV, QA and PROD',
+    ],
+  },
+  {
+    company: 'Universidad Tecnológica de Pereira',
+    role: 'Backend Developer',
+    period: { from: '2024-01', to: '2026-05' },
+    location: 'Pereira, Colombia',
+    domain: 'Institutional academic systems',
+    stack: ['NestJS', 'TypeScript', 'Oracle DB', 'PostgreSQL', 'Jest', 'Swagger', 'Docker'],
+    highlights: [
+      'Designed microservices for critical institutional systems with JWT auth and role-based access',
+      'Co-led the Internship Management Portal, automating the student-company workflow',
+      'Optimized SQL queries and data models on Oracle and PostgreSQL for the Institutional Analytics Dashboard',
+      'Built modules for the Deans academic system and the grading system, ensuring data integrity',
+      'Jest coverage above 80% on critical modules, Swagger documentation, Scrum',
+    ],
+  },
+  {
+    company: 'Freelance',
+    role: 'Full Stack Developer (Backend focus)',
+    period: { from: '2022-01', to: '2023-12' },
+    location: 'Remote',
+    domain: 'E-commerce, authentication and management systems',
+    stack: ['NestJS', 'Express', 'TypeScript', 'PostgreSQL', 'MongoDB', 'MySQL', 'AWS Lambda', 'AWS SQS', 'Docker'],
+    highlights: [
+      'Catalog, cart and payment APIs for e-commerce platforms',
+      'Serverless async order processing with AWS Lambda and SQS, decoupled from the main API',
+      'Authentication & authorization microservice with roles and permissions (JWT, RBAC, OWASP)',
+      'Gym management app with decision-making reports; Docker and CI/CD deployments',
+    ],
   },
 ]
 
@@ -81,38 +130,31 @@ interface EndpointProps {
   id: string
   curl?: string
   params?: ParamDef[]
+  defaultOpen?: boolean
   onExecute?: (params: Record<string, string>) => void
   children: React.ReactNode
 }
 
-const Endpoint = ({ method, path, description, id, curl, params, onExecute, children }: EndpointProps) => {
-  const [open, setOpen] = useState(false)
+const Endpoint = ({ method, path, description, id, curl, params, defaultOpen = false, onExecute, children }: EndpointProps) => {
+  const [open, setOpen] = useState(defaultOpen)
   const [tryMode, setTryMode] = useState(false)
-  const [executed, setExecuted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [paramValues, setParamValues] = useState<Record<string, string>>({})
 
   const handleExecute = useCallback(() => {
     setLoading(true)
-    onExecute?.(paramValues)
     setTimeout(() => {
+      onExecute?.(paramValues)
       setLoading(false)
-      setExecuted(true)
     }, 400)
   }, [paramValues, onExecute])
 
   const handleCancel = useCallback(() => {
     setTryMode(false)
-    setExecuted(false)
     setLoading(false)
     setParamValues({})
     onExecute?.({})
   }, [onExecute])
-
-  const handleClear = useCallback(() => {
-    setExecuted(false)
-    setLoading(false)
-  }, [])
 
   const buildCurl = () => {
     if (!curl) return ''
@@ -131,7 +173,7 @@ const Endpoint = ({ method, path, description, id, curl, params, onExecute, chil
 
   return (
     <section className="endpoint-section" id={id}>
-      <button className="endpoint-toggle" onClick={() => setOpen(!open)}>
+      <button className="endpoint-toggle" onClick={() => setOpen(!open)} aria-expanded={open}>
         <div className="endpoint-header">
           <span className={`method method-${method.toLowerCase()}`}>{method}</span>
           <span className="endpoint-path">{path}</span>
@@ -159,6 +201,7 @@ const Endpoint = ({ method, path, description, id, curl, params, onExecute, chil
                         placeholder={p.placeholder}
                         value={paramValues[p.name] || ''}
                         onChange={(e) => setParamValues({ ...paramValues, [p.name]: e.target.value })}
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleExecute() }}
                       />
                     )}
                   </div>
@@ -167,23 +210,22 @@ const Endpoint = ({ method, path, description, id, curl, params, onExecute, chil
             </div>
           )}
 
-          <div className="tryout-bar">
-            {!tryMode ? (
-              <button className="tryout-btn" onClick={() => setTryMode(true)}>
-                Try it out
-              </button>
-            ) : (
-              <div className="tryout-actions">
-                <button className="execute-btn" onClick={handleExecute} disabled={loading}>
-                  {loading ? 'Sending...' : 'Execute'}
+          {params && params.length > 0 && (
+            <div className="tryout-bar">
+              {!tryMode ? (
+                <button className="tryout-btn" onClick={() => setTryMode(true)}>
+                  Try it out
                 </button>
-                <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
-                {executed && (
-                  <button className="clear-btn" onClick={handleClear}>Clear</button>
-                )}
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="tryout-actions">
+                  <button className="execute-btn" onClick={handleExecute} disabled={loading}>
+                    {loading ? 'Sending...' : 'Execute'}
+                  </button>
+                  <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+                </div>
+              )}
+            </div>
+          )}
 
           {curl && (
             <div className="curl-block">
@@ -192,14 +234,12 @@ const Endpoint = ({ method, path, description, id, curl, params, onExecute, chil
             </div>
           )}
 
-          {loading && (
+          {loading ? (
             <div className="response-loading">
               <div className="loading-spinner" />
               <span>Loading response...</span>
             </div>
-          )}
-
-          {executed && !loading && (
+          ) : (
             <div className="response-wrapper">
               {children}
             </div>
@@ -212,6 +252,7 @@ const Endpoint = ({ method, path, description, id, curl, params, onExecute, chil
 
 const sections = [
   { id: 'about', method: 'GET', path: '/about' },
+  { id: 'experience', method: 'GET', path: '/experience' },
   { id: 'projects', method: 'GET', path: '/projects' },
   { id: 'projects-oss', method: 'GET', path: '/projects?type=oss' },
   { id: 'skills', method: 'GET', path: '/skills' },
@@ -219,13 +260,19 @@ const sections = [
 ]
 
 const fullAboutResponse = {
-  name: 'Diego Rincón',
+  name: 'Juan Diego Rincón Franco',
   role: 'Backend Developer',
-  stack: ['TypeScript', 'NestJS', '.NET', 'Rust'],
-  databases: ['Oracle', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
-  aws: { s3: true, sqs: true, lambda: true, dynamodb: true },
+  current: 'Backend Developer @ LinkTic',
+  location: 'Pereira, Colombia',
+  experience: '~5 years',
+  stack: ['TypeScript', 'Node.js', 'NestJS', 'SQL'],
+  architecture: ['Microservices', 'DDD', 'Hexagonal', 'Event-Driven', 'Serverless', 'SAGA', 'Outbox', 'gRPC', 'REST'],
+  databases: ['PostgreSQL', 'SQL Server', 'MySQL', 'Oracle', 'MongoDB', 'Redis'],
+  cloud: { aws: ['Lambda', 'SQS'], azure: ['Service Bus', 'Azure DevOps'] },
+  open_source: ['restui', 'dbtui'],
+  education: 'Systems & Computing Engineer · Universidad Tecnológica de Pereira (2026)',
+  languages: { es: 'native', en: 'B1' },
   environment: { os: 'Arch Linux', wm: 'Hyprland', editor: 'Neovim', shell: 'Fish' },
-  status: 'Systems & Computing Engineer',
 }
 
 const ossProjects = projects.filter(p => p.highlights.includes('Open source'))
@@ -240,6 +287,18 @@ const filterProjects = (list: IProjectProps[], query: string): IProjectProps[] =
     p.architecture.toLowerCase().includes(q) ||
     p.technologies.some(t => t.toLowerCase().includes(q)) ||
     p.highlights.some(h => h.toLowerCase().includes(q))
+  )
+}
+
+const filterExperience = (list: ExperienceEntry[], query: string): ExperienceEntry[] => {
+  if (!query.trim()) return list
+  const q = query.toLowerCase()
+  return list.filter(e =>
+    e.company.toLowerCase().includes(q) ||
+    e.role.toLowerCase().includes(q) ||
+    e.domain.toLowerCase().includes(q) ||
+    e.stack.some(t => t.toLowerCase().includes(q)) ||
+    e.highlights.some(h => h.toLowerCase().includes(q))
   )
 }
 
@@ -268,10 +327,20 @@ const filterAbout = (field: string): object => {
   return matched
 }
 
+const EmptyResult = ({ query }: { query: string }) => (
+  <div className="response-block">
+    <div className="response-header">
+      <span className="status-code">200</span> OK &middot; 0 results
+    </div>
+    <JsonBlock data={{ results: [], query, message: 'No entries match your search' }} />
+  </div>
+)
+
 export const Home = () => {
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'catppuccin')
   const [projectQuery, setProjectQuery] = useState('')
   const [ossQuery, setOssQuery] = useState('')
+  const [experienceQuery, setExperienceQuery] = useState('')
   const [aboutField, setAboutField] = useState('')
   const [skillsCategory, setSkillsCategory] = useState('')
 
@@ -282,6 +351,7 @@ export const Home = () => {
 
   const filteredApiProjects = filterProjects(apiProjects, projectQuery)
   const filteredOssProjects = filterProjects(ossProjects, ossQuery)
+  const filteredExperience = filterExperience(experience, experienceQuery)
   const aboutResponse = filterAbout(aboutField)
 
   return (
@@ -311,6 +381,10 @@ export const Home = () => {
             <span className="sidebar-icon">↗</span>
             <span className="path">LinkedIn</span>
           </a>
+          <button onClick={downloadCV} className="sidebar-link sidebar-button">
+            <span className="sidebar-icon">↓</span>
+            <span className="path">Download CV</span>
+          </button>
         </nav>
       </aside>
 
@@ -340,15 +414,28 @@ export const Home = () => {
           </div>
         </div>
 
+        <header className="api-intro">
+          <h1 className="intro-name">Juan Diego Rincón Franco</h1>
+          <p className="intro-headline">
+            Backend Developer · NestJS · Node.js · TypeScript · Microservices · Cloud (AWS / Azure)
+          </p>
+          <p className="intro-summary">
+            Systems Engineer with ~5 years building microservices and distributed systems.
+            DDD / hexagonal architecture, gRPC, event-driven messaging, SAGA and Outbox patterns
+            on financial platforms. Currently at LinkTic.
+          </p>
+        </header>
+
         <Endpoint
           method="GET"
           path="/about"
           description="Returns developer information"
           id="about"
+          defaultOpen
           curl="curl -X GET https://diego.dev/about \
   -H 'Accept: application/json'"
           params={[
-            { name: 'field', placeholder: 'e.g. stack, databases, aws', description: 'Filter response by field name' },
+            { name: 'field', placeholder: 'e.g. stack, databases, cloud', description: 'Filter response by field name' },
           ]}
           onExecute={(p) => setAboutField(p.field || '')}
         >
@@ -362,13 +449,54 @@ export const Home = () => {
 
         <Endpoint
           method="GET"
+          path="/experience"
+          description="Returns professional experience"
+          id="experience"
+          defaultOpen
+          curl={`curl -X GET https://diego.dev/experience \\
+  -H 'Accept: application/json'`}
+          params={[
+            { name: 'q', placeholder: 'e.g. linktic, grpc, oracle', description: 'Search experience by company, stack or keyword' },
+          ]}
+          onExecute={(p) => setExperienceQuery(p.q || '')}
+        >
+          {filteredExperience.length > 0 ? (
+            <>
+              <div className="response-block">
+                <div className="response-header">
+                  <span className="status-code">200</span> OK &middot; {filteredExperience.length} results
+                </div>
+              </div>
+              <div className="projects-list">
+                {filteredExperience.map((entry, index) => (
+                  <div className="api-project" key={entry.company}>
+                    <div className="response-block">
+                      <div className="response-header">
+                        <span className="status-code">200</span> experience[{index}]
+                        <span className="experience-period">
+                          {entry.period.from} → {entry.period.to}
+                        </span>
+                      </div>
+                      <JsonBlock data={entry} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <EmptyResult query={experienceQuery} />
+          )}
+        </Endpoint>
+
+        <Endpoint
+          method="GET"
           path="/projects"
           description="Returns backend & full-stack projects"
           id="projects"
           curl={`curl -X GET https://diego.dev/projects \\
   -H 'Accept: application/json'`}
           params={[
-            { name: 'q', placeholder: 'e.g. tenant, nestjs, production', description: 'Search projects by keyword' },
+            { name: 'q', placeholder: 'e.g. tenant, saga, websocket', description: 'Search projects by keyword' },
           ]}
           onExecute={(p) => setProjectQuery(p.q || '')}
         >
@@ -386,12 +514,7 @@ export const Home = () => {
               </div>
             </>
           ) : (
-            <div className="response-block">
-              <div className="response-header">
-                <span className="status-code">200</span> OK &middot; 0 results
-              </div>
-              <JsonBlock data={{ results: [], query: projectQuery, message: 'No projects match your search' }} />
-            </div>
+            <EmptyResult query={projectQuery} />
           )}
         </Endpoint>
 
@@ -421,12 +544,7 @@ export const Home = () => {
               </div>
             </>
           ) : (
-            <div className="response-block">
-              <div className="response-header">
-                <span className="status-code">200</span> OK &middot; 0 results
-              </div>
-              <JsonBlock data={{ results: [], query: ossQuery, message: 'No projects match your search' }} />
-            </div>
+            <EmptyResult query={ossQuery} />
           )}
         </Endpoint>
 
@@ -438,7 +556,7 @@ export const Home = () => {
           curl={`curl -X GET 'https://diego.dev/skills?group=true' \\
   -H 'Accept: application/json'`}
           params={[
-            { name: 'category', placeholder: 'e.g. languages, databases, aws', description: 'Filter by skill category' },
+            { name: 'category', placeholder: 'e.g. architecture, databases, cloud', description: 'Filter by skill category' },
           ]}
           onExecute={(p) => setSkillsCategory(p.category || '')}
         >
@@ -452,15 +570,24 @@ export const Home = () => {
           id="contact"
           curl={`curl -X POST https://diego.dev/contact \\
   -H 'Content-Type: application/json' \\
-  -d '{"via": "linkedin"}'`}
+  -d '{"via": "email"}'`}
         >
           <div className="response-block">
             <div className="response-header">
               <span className="status-code">200</span> OK
             </div>
-            <JsonBlock data={{ message: 'Choose a contact method', status: 'ready' }} />
+            <JsonBlock data={{
+              status: 'ready',
+              email: 'juandiegorinconfranco@gmail.com',
+              linkedin: 'linkedin.com/in/di3go00',
+              github: 'github.com/Di3go0-0',
+              location: 'Pereira, Colombia',
+            }} />
           </div>
           <div className="contact-links">
+            <a href="mailto:juandiegorinconfranco@gmail.com" className="contact-btn">
+              Email
+            </a>
             <a href="https://linkedin.com/in/di3go00" target="_blank" rel="noopener noreferrer" className="contact-btn">
               LinkedIn
             </a>
